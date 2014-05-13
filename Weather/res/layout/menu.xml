@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/camera_lens_lomo"
+            android:contentDescription="@string/imgContentDesc"
             android:focusable="false" />
 
         <LinearLayout
@@ -37,7 +38,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
-                    android:text="李毅"
+                    android:text="@string/smsItemNameStr"
                     android:textColor="@color/white"
                     android:textSize="17sp" />
             </LinearLayout>
@@ -54,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     android:gravity="center_vertical"
-                    android:text="一路向北"
+                    android:text="@string/smsItemContentStr"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -67,17 +68,17 @@
         android:background="@drawable/biz_main_tab_divider"
         android:focusable="false"
         android:focusableInTouchMode="false" />
-	<Button
-	    android:id="@+id/addaddress"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="center_vertical"
-	    android:text="地区>>"
-	    android:padding="10dp"
-	    android:textColor="@color/white"
-	    android:textSize="16sp" 
-	    android:background="@drawable/add_btn"
-	    />
+
+    <Button
+        android:id="@+id/addaddress"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/add_btn"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="@string/region"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -90,12 +91,12 @@
         android:id="@+id/menuaddresslist"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:fadingEdge="none"
-        android:headerDividersEnabled="true"
-        android:divider="@drawable/biz_main_tab_divider" 
         android:background="@color/transparent"
         android:choiceMode="singleChoice"
+        android:divider="@drawable/biz_main_tab_divider"
         android:drawSelectorOnTop="false"
-        >
+        android:fadingEdge="none"
+        android:headerDividersEnabled="true" >
     </ListView>
+
 </LinearLayout>

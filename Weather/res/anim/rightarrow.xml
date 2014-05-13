@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:apk="http://schemas.android.com/apk/res/android" >
+
+    <item
+        apk:drawable="@drawable/arrow_ani_right_1"
+        apk:duration="500">
+    </item>
+    <item
+        apk:drawable="@drawable/arrow_ani_right_2"
+        apk:duration="500">
+    </item>
+    <item
+        apk:drawable="@drawable/arrow_ani_right_3"
+        apk:duration="500">
+    </item>
+    <item
+        apk:drawable="@drawable/arrow_ani_right_4"
+        apk:duration="500">
+    </item>
+    <item
+        apk:drawable="@drawable/arrow_ani_right_5"
+        apk:duration="500">
+    </item>
+
+</animation-list>
