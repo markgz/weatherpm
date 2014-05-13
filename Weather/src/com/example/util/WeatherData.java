@@ -72,9 +72,9 @@ public class WeatherData {
 			weather.setRefreshDate(getDate());	//更新日期
 			weather.setRefreshTime(getTime());	//更新时间
 			weather.setRefreshWeek(getWeek());	//更新星期
-			weather.setPicIndex(jsonObj.getInt("img1"));	//当天天气图片编号
+			weather.setPicIndex(jsonObj.getInt("img1"));	
 			
-			List<Integer> topPic = new ArrayList<Integer>();	//最高温时的图片编号
+			List<Integer> topPic = new ArrayList<Integer>();	
 			if(temp == 1){
 				topPic.add(getSavePic(activity));
 			}else{
@@ -84,22 +84,25 @@ public class WeatherData {
 			topPic.add(getJsonPic(jsonObj, "img", 3-temp));
 			topPic.add(getJsonPic(jsonObj, "img", 5-temp));
 			topPic.add(getJsonPic(jsonObj, "img", 7-temp));
+			topPic.add(getJsonPic(jsonObj, "img", 9-temp));
 			weather.setTopPic(topPic);
 			
-			List<Integer> lowPic = new ArrayList<Integer>();	//最低温时的图片编号
+			List<Integer> lowPic = new ArrayList<Integer>();	
 			lowPic.add(getJsonPic(jsonObj, "img", 2-temp));
 			lowPic.add(getJsonPic(jsonObj, "img", 4-temp));
 			lowPic.add(getJsonPic(jsonObj, "img", 6-temp));
 			lowPic.add(getJsonPic(jsonObj, "img", 8-temp));
+			lowPic.add(getJsonPic(jsonObj, "img", 10-temp));
 			weather.setLowPic(lowPic);
 			
-			List<String> tempList = new ArrayList<String>();	//未来四天温度
-			tempList.add(jsonObj.getString("temp1"));
+			List<String> tempList = new ArrayList<String>();	
+			tempList.add(jsonObj.getString("temp1"));//temp1 就是当天温度
 			tempList.add(jsonObj.getString("temp2"));
 			tempList.add(jsonObj.getString("temp3"));
 			tempList.add(jsonObj.getString("temp4"));
+			tempList.add(jsonObj.getString("temp5"));
 			
-			List<String> tempListMax = new ArrayList<String>();		//未来四天最高温度集合（有℃符号）
+			List<String> tempListMax = new ArrayList<String>();		
 			if(temp == 1){
 				tempListMax.add(getSaveTemperature(activity));
 			}else{
@@ -109,21 +112,23 @@ public class WeatherData {
 			tempListMax.add(getTemperatureMaxAndMin(tempList.get(1-temp))[0+temp]);
 			tempListMax.add(getTemperatureMaxAndMin(tempList.get(2-temp))[0+temp]);
 			tempListMax.add(getTemperatureMaxAndMin(tempList.get(3-temp))[0+temp]);
+			tempListMax.add(getTemperatureMaxAndMin(tempList.get(4-temp))[0+temp]);
 			weather.setTemperatureMax(tempListMax);		
 			
 			weather.setTodayTemperature(getTemperatureMaxAndMin(tempList.get(0))[0]);	//当天温度（实时）
 			weather.setTodayWeather(jsonObj.getString("img_title1"));	//当天天气描述（实时）
 			
-			List<String> tempListMin = new ArrayList<String>();			//未来四天最低温度集合（有℃符号）
+			List<String> tempListMin = new ArrayList<String>();			
 			tempListMin.add(getTemperatureMaxAndMin(tempList.get(0))[1-temp]);
 			tempListMin.add(getTemperatureMaxAndMin(tempList.get(1))[1-temp]);
 			tempListMin.add(getTemperatureMaxAndMin(tempList.get(2))[1-temp]);
 			tempListMin.add(getTemperatureMaxAndMin(tempList.get(3))[1-temp]);
+			tempListMin.add(getTemperatureMaxAndMin(tempList.get(4))[1-temp]);
 			weather.setTemperatureMin(tempListMin);
 			
 			weather.setTomorrowTemperature(tempList.get(1));	//明天温度（包括最高温和最低温）
 			
-			List<String> weatherList = new ArrayList<String>();	//未来四天天气
+			List<String> weatherList = new ArrayList<String>();	
 			if(temp == 1){
 				weatherList.add(getSaveWeather(activity));
 			}else{
@@ -133,18 +138,20 @@ public class WeatherData {
 			weatherList.add(jsonObj.getString("weather"+(2-temp)));
 			weatherList.add(jsonObj.getString("weather"+(3-temp)));
 			weatherList.add(jsonObj.getString("weather"+(4-temp)));
+			weatherList.add(jsonObj.getString("weather"+(5-temp)));
 			weather.setWeather(weatherList);
 			weather.setTomorrowWeather(weatherList.get(1));
 			
-			List<String> windList = new ArrayList<String>();	//未来四天风力
+			List<String> windList = new ArrayList<String>();	
 			windList.add(jsonObj.getString("wind1"));
 			windList.add(jsonObj.getString("wind2"));
 			windList.add(jsonObj.getString("wind3"));
 			windList.add(jsonObj.getString("wind4"));
+			windList.add(jsonObj.getString("wind5"));
 			weather.setWind(windList);
 			
-			weather.setMaxlist(transplate(tempListMax));	//未来四天最高温度集合（无℃符号）
-			weather.setMinlist(transplate(tempListMin));	//未来四天最低温度集合（无℃符号）
+			weather.setMaxlist(transplate(tempListMax));	
+			weather.setMinlist(transplate(tempListMin));	
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

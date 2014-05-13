@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<RelativeLayout 
 	android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparentblack">
@@ -12,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" 
         android:textColor="#FFFFFF"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
 		>
 
         <TextView
@@ -20,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="周日 " 
+            android:text="@string/sunday" 
             android:textColor="#FFFFFF"
             android:gravity="center_horizontal"/>
 
@@ -29,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="周一 " 
+            android:text="@string/sunday" 
             android:textColor="#FFFFFF"
             android:gravity="center_horizontal"/>
 
@@ -38,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="周二 " 
+            android:text="@string/sunday" 
             android:textColor="#FFFFFF"
             android:gravity="center_horizontal"/>
 
@@ -47,7 +44,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="周三 " 
+            android:text="@string/sunday" 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+        
+        <TextView
+            android:id="@+id/day5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sunday" 
             android:textColor="#FFFFFF"
             android:gravity="center_horizontal"/>
 
@@ -95,7 +101,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="晴" 
+            android:text="@string/sunshine" 
             android:textColor="#FFFFFF"
             android:gravity="center_horizontal"/>
 
@@ -104,7 +110,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="晴" 
+            android:text="@string/sunshine" 
             android:textColor="#FFFFFF"
             android:gravity="center_horizontal"/>
 
@@ -113,7 +119,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="晴" 
+            android:text="@string/sunshine" 
             android:textColor="#FFFFFF"
             android:gravity="center_horizontal"/>
 
@@ -122,7 +128,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="晴" 
+            android:text="@string/sunshine" 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+       
+       <TextView
+            android:id="@+id/weather5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sunshine" 
             android:textColor="#FFFFFF"
             android:gravity="center_horizontal"/>
 
@@ -138,43 +153,51 @@
         android:layout_alignParentBottom="true">
 
         <TextView
-            android:id="@+id/seventime"
+            android:id="@+id/relatedDate1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="01/24"
+            android:text="@string/datesample"
             android:textColor="#FFFFFF" 
             android:gravity="center_horizontal"/>
 
         <TextView
-            android:id="@+id/seventime"
+            android:id="@+id/relatedDate2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="01/24"
+            android:text="@string/datesample"
             android:textColor="#FFFFFF" 
             android:gravity="center_horizontal"/>
 
         <TextView
-            android:id="@+id/seventime"
+            android:id="@+id/relatedDate3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="01/24"
+            android:text="@string/datesample"
             android:textColor="#FFFFFF" 
             android:gravity="center_horizontal"/>
 
         <TextView
-            android:id="@+id/seventime"
+            android:id="@+id/relatedDate4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="01/24"
+            android:text="@string/datesample"
+            android:textColor="#FFFFFF" 
+            android:gravity="center_horizontal"/>
+        
+        <TextView
+            android:id="@+id/relatedDate5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/datesample"
             android:textColor="#FFFFFF" 
             android:gravity="center_horizontal"/>
 
     </LinearLayout>
 
 
-</RelativeLayout>
 </RelativeLayout>

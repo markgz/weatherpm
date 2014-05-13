@@ -19,7 +19,7 @@ import com.example.absdemo.R;
 import com.example.util.DB;
 /**
  * 地区列表界面
- * @author Dave
+ * @author Mark
  *
  */
 public class AddressActivity extends SherlockActivity{

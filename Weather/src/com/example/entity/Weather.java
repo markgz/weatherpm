@@ -56,9 +56,9 @@ public class Weather {
 	public void setRefreshTime(String refreshTime) {
 		this.refreshTime = refreshTime;
 	}
-	public String getRefreshWeek() {
+	/*public String getRefreshWeek() {
 		return refreshWeek;
-	}
+	}*/
 	public void setRefreshWeek(String refreshWeek) {
 		this.refreshWeek = refreshWeek;
 	}

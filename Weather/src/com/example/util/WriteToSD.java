@@ -6,34 +6,49 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.content.Context;
+import android.util.Log;
+
 /**
  * 将assets文件夹下的数据库写入SD卡中
+ * 
  * @author Dave
- *
+ * 
  */
 public class WriteToSD {
 	private Context context;
-	String filePath = android.os.Environment.getExternalStorageDirectory()+"/weather";
-	
-	public WriteToSD(Context context){
+	String filePath = android.os.Environment.getExternalStorageDirectory()
+			+ "/weather";
+
+	public WriteToSD(Context context) {
 		this.context = context;
-		if(!isExist()){
+		if (!isExist()) {
 			write();
 		}
 	}
-	private void write(){
+
+	private void write() {
 		InputStream inputStream;
 		try {
-			inputStream = context.getResources().getAssets().open("addressId.db", 3);
+			inputStream = context.getResources().getAssets()
+					.open("addressId.db", 3);
 			File file = new File(filePath);
-			if(!file.exists()){
+
+			/*File deleteFile = new File(filePath + "/database.db");
+
+			if (deleteFile.exists()) {
+				boolean result = deleteFile.delete();
+				Log.i("TAG", "delete result: " + result);
+			}*/
+
+			if (!file.exists()) {
 				file.mkdirs();
 			}
-			FileOutputStream fileOutputStream = new FileOutputStream(filePath + "/database.db");
+			FileOutputStream fileOutputStream = new FileOutputStream(filePath
+					+ "/database.db");
 			byte[] buffer = new byte[512];
 			int count = 0;
-			while((count = inputStream.read(buffer)) > 0){
-				fileOutputStream.write(buffer, 0 ,count);
+			while ((count = inputStream.read(buffer)) > 0) {
+				fileOutputStream.write(buffer, 0, count);
 			}
 			fileOutputStream.flush();
 			fileOutputStream.close();
@@ -44,11 +59,12 @@ public class WriteToSD {
 			e.printStackTrace();
 		}
 	}
-	private boolean isExist(){
+
+	private boolean isExist() {
 		File file = new File(filePath + "/database.db");
-		if(file.exists()){
+		if (file.exists()) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}

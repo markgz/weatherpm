@@ -9,5 +9,15 @@
     <string name="smsItemNameStr">MarkGZ</string>
     <string name="imgContentDesc">thisIsImage</string>
     <string name="city">城市</string>
+    <string name="monday">星期一</string>
+    <string name="tuesday">星期二</string>
+    <string name="wednesday">星期三</string>
+    <string name="thursday">星期四</string>
+    <string name="friday">星期五</string>
+    <string name="saturday">星期六</string>
+    <string name="sunday">星期日</string>
+    <string name="sunshine">晴</string>
+    <string name="datesample">01/24</string>
     
+    <string name="dateformat">dd/MM</string>
 </resources>

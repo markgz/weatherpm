@@ -1,8 +1,12 @@
 package com.example.weather;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import net.simonvt.menudrawer.MenuDrawer;
@@ -13,6 +17,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,14 +76,22 @@ public class MainActivity extends SherlockActivity {
 
 	// 第二个界面组件
 	private TrendView view;
-	private TextView day1;
-	private TextView day2;
-	private TextView day3;
-	private TextView day4;
-	private TextView wea1;
-	private TextView wea2;
-	private TextView wea3;
-	private TextView wea4;
+	private TextView day1TextView;
+	private TextView day2TextView;
+	private TextView day3TextView;
+	private TextView day4TextView;
+	private TextView day5TextView;
+	private TextView wea1TextView;
+	private TextView wea2TextView;
+	private TextView wea3TextView;
+	private TextView wea4TextView;
+	private TextView wea5TextView;
+
+	private TextView date1TextView;
+	private TextView date2TextView;
+	private TextView date3TextView;
+	private TextView date4TextView;
+	private TextView date5TextView;
 
 	// 侧面菜单栏地址列表
 	private List<Map<String, String>> addressList;
@@ -165,14 +179,16 @@ public class MainActivity extends SherlockActivity {
 	private void initAnim() {
 		// 城市箭头补间动画
 		TextView textView = (TextView) layout1.findViewById(R.id.city);
-		AnimationDrawable ad = (AnimationDrawable)textView.getCompoundDrawables()[0];
+		AnimationDrawable ad = (AnimationDrawable) textView
+				.getCompoundDrawables()[0];
 		ad.start();
 
-		//trend arrow
+		// trend arrow
 		ImageView imageView = (ImageView) layout1.findViewById(R.id.trendarrow);
-		AnimationDrawable treadAD = (AnimationDrawable) imageView.getBackground();
+		AnimationDrawable treadAD = (AnimationDrawable) imageView
+				.getBackground();
 		treadAD.start();
-		
+
 		// 透明度变化动画
 		animation = new AlphaAnimation(1, 0);
 		animation.setDuration(700);
@@ -197,20 +213,51 @@ public class MainActivity extends SherlockActivity {
 		weatherPic = (ImageView) layout1.findViewById(R.id.weatherPic);
 
 		// 第二页面控件
-		int screenWidth = getWindowManager().getDefaultDisplay().getWidth(); // 屏幕宽（像素，如：480px）
-		int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		int screenWidth = displayMetrics.widthPixels;
+		int screenHeight = displayMetrics.heightPixels;
 		view = (TrendView) layout2.findViewById(R.id.trendView);
 		view.setWidthHeight(screenWidth, screenHeight);
 
-		day1 = (TextView) layout2.findViewById(R.id.day1);
-		day2 = (TextView) layout2.findViewById(R.id.day2);
-		day3 = (TextView) layout2.findViewById(R.id.day3);
-		day4 = (TextView) layout2.findViewById(R.id.day4);
-		wea1 = (TextView) layout2.findViewById(R.id.weather1);
-		wea2 = (TextView) layout2.findViewById(R.id.weather2);
-		wea3 = (TextView) layout2.findViewById(R.id.weather3);
-		wea4 = (TextView) layout2.findViewById(R.id.weather4);
+		day1TextView = (TextView) layout2.findViewById(R.id.day1);
+		day2TextView = (TextView) layout2.findViewById(R.id.day2);
+		day3TextView = (TextView) layout2.findViewById(R.id.day3);
+		day4TextView = (TextView) layout2.findViewById(R.id.day4);
+		day5TextView = (TextView) layout2.findViewById(R.id.day5);
+		wea1TextView = (TextView) layout2.findViewById(R.id.weather1);
+		wea2TextView = (TextView) layout2.findViewById(R.id.weather2);
+		wea3TextView = (TextView) layout2.findViewById(R.id.weather3);
+		wea4TextView = (TextView) layout2.findViewById(R.id.weather4);
+		wea5TextView = (TextView) layout2.findViewById(R.id.weather5);
 
+		date1TextView = (TextView) layout2.findViewById(R.id.relatedDate1);
+		date2TextView = (TextView) layout2.findViewById(R.id.relatedDate2);
+		date3TextView = (TextView) layout2.findViewById(R.id.relatedDate3);
+		date4TextView = (TextView) layout2.findViewById(R.id.relatedDate4);
+		date5TextView = (TextView) layout2.findViewById(R.id.relatedDate5);
+
+		Calendar calendar = Calendar.getInstance();
+
+		day1TextView.setText(getDayOfWeek(calendar));
+		date1TextView.setText(getDateFormat(calendar));
+		
+		calendar.add(Calendar.DAY_OF_WEEK, 1);
+		day2TextView.setText(getDayOfWeek(calendar));
+		date2TextView.setText(getDateFormat(calendar));
+		
+		calendar.add(Calendar.DAY_OF_WEEK, 1);
+		day3TextView.setText(getDayOfWeek(calendar));
+		date3TextView.setText(getDateFormat(calendar));
+		
+		calendar.add(Calendar.DAY_OF_WEEK, 1);
+		day4TextView.setText(getDayOfWeek(calendar));
+		date4TextView.setText(getDateFormat(calendar));
+		
+		calendar.add(Calendar.DAY_OF_WEEK, 1);
+		day5TextView.setText(getDayOfWeek(calendar));
+		date5TextView.setText(getDateFormat(calendar));
+		
 		// 点击城市，更换城市天气
 		city.setOnClickListener(new OnClickListener() {
 			@Override
@@ -294,6 +341,63 @@ public class MainActivity extends SherlockActivity {
 		adapter.notifyDataSetChanged();
 		menuListView.setItemChecked(0, true);
 		refresh();
+	}
+
+	public String getDayOfWeek(Calendar calendar) {
+		String day = "";
+		int dayConstant = calendar.get(Calendar.DAY_OF_WEEK);
+		switch (dayConstant) {
+		case 1:
+
+			day = getResources().getString(R.string.sunday);
+
+			break;
+		case 2:
+
+			day = getResources().getString(R.string.monday);
+
+			break;
+		case 3:
+
+			day = getResources().getString(R.string.tuesday);
+
+			break;
+		case 4:
+
+			day = getResources().getString(R.string.wednesday);
+
+			break;
+		case 5:
+
+			day = getResources().getString(R.string.thursday);
+
+			break;
+		case 6:
+
+			day = getResources().getString(R.string.friday);
+
+			break;
+		case 7:
+
+			day = getResources().getString(R.string.saturday);
+
+			break;
+
+		default:
+			break;
+		}
+		return day;
+	}
+	
+	public String getDateFormat(Calendar calendar){
+		String formatDate = "";
+		Date date = calendar.getTime();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(R.string.dateformat));
+		//new SimpleDateFormat("", new Local);
+		formatDate = sdf.format(date);
+		
+		return formatDate;
 	}
 
 	@Override
@@ -404,6 +508,7 @@ public class MainActivity extends SherlockActivity {
 		@Override
 		protected Integer doInBackground(Integer... i) {// 处理后台执行的任务，在后台线程执行
 			WeatherData data = new WeatherData(MainActivity.this);
+			Log.i("TAG", "id: " + id);
 			weatherData = data.getData("http://m.weather.com.cn/data/" + id
 					+ ".html");
 			return 0;
@@ -412,6 +517,7 @@ public class MainActivity extends SherlockActivity {
 		@Override
 		protected void onPostExecute(Integer result) {// 后台任务执行完之后被调用，在ui线程执行
 			// 更新界面控件值
+			Log.i("TAG", "id: " + id + " city: " + weatherData.getCity());
 			city.setText(weatherData.getCity());
 			temperature.setText(weatherData.getTodayTemperature());
 			if (weatherData.getWeather().get(0).equals("")) {
@@ -432,18 +538,16 @@ public class MainActivity extends SherlockActivity {
 			view.setTemperature(weatherData.getMaxlist(),
 					weatherData.getMinlist());
 			view.setBitmap(weatherData.getTopPic(), weatherData.getLowPic());
-			/*
-			 * day1.setText(text); day1.setText(text); day1.setText(text);
-			 * day1.setText(text);
-			 */
+
 			if (!weatherData.getWeather().get(0).equals("")) {
-				wea1.setText(weatherData.getWeather().get(0));
+				wea1TextView.setText(weatherData.getWeather().get(0));
 			} else {
-				wea1.setText(weatherData.getTodayWeather());
+				wea1TextView.setText(weatherData.getTodayWeather());
 			}
-			wea2.setText(weatherData.getWeather().get(1));
-			wea3.setText(weatherData.getWeather().get(2));
-			wea4.setText(weatherData.getWeather().get(3));
+			wea2TextView.setText(weatherData.getWeather().get(1));
+			wea3TextView.setText(weatherData.getWeather().get(2));
+			wea4TextView.setText(weatherData.getWeather().get(3));
+			wea5TextView.setText(weatherData.getWeather().get(4));
 
 			// 完成
 			setSupportProgressBarIndeterminateVisibility(false);
