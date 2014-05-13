@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="@drawable/laterbg">
+    
+	<LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:layout_margin="10dp"
+         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="明天"
+            android:textColor="@color/abs__holo_blue_light"
+            android:textSize="20sp" 
+            android:shadowColor="@color/black"
+        	android:shadowRadius="4"/>
+		<TextView
+		    android:id="@+id/tomorroweather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="晴"
+            android:textColor="@color/abs__holo_blue_light"
+            android:textSize="14sp" 
+			android:shadowColor="@color/black"
+        	android:shadowRadius="4"/>
+        <TextView
+            android:id="@+id/tomorrowtemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="34/21℃ "
+            android:textColor="@color/abs__holo_blue_light"
+            android:textSize="14sp" 
+            android:shadowColor="@color/black"
+        	android:shadowRadius="4"/>
+    </LinearLayout>
+</LinearLayout>

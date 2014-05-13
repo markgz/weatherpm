@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout 
+	android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparentblack">
+    <LinearLayout
+        android:id="@+id/day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="40dp"
+		>
+
+        <TextView
+            android:id="@+id/day1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="周日 " 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/day2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="周一 " 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/day3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="周二 " 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/day4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="周三 " 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+
+
+    </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shiline"
+    android:focusable="false"
+    android:layout_below="@+id/day"
+    android:focusableInTouchMode="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/day"
+        >
+        <com.example.view.TrendView
+            android:id="@+id/trendView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+        </com.example.view.TrendView>
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shiline"
+    android:focusable="false"
+    android:layout_above="@+id/weather"
+    android:focusableInTouchMode="false" />
+    <LinearLayout
+        android:id="@+id/weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:layout_above="@+id/date"
+		>
+
+        <TextView
+            android:id="@+id/weather1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="晴" 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/weather2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="晴" 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/weather3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="晴" 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+
+       <TextView
+            android:id="@+id/weather4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="晴" 
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/seventime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="01/24"
+            android:textColor="#FFFFFF" 
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/seventime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="01/24"
+            android:textColor="#FFFFFF" 
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/seventime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="01/24"
+            android:textColor="#FFFFFF" 
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/seventime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="01/24"
+            android:textColor="#FFFFFF" 
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+</RelativeLayout>
