@@ -16,7 +16,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
 		String typeName = NetworkInfoUtil.getNetWorkType(context);
 		Log.i("TAG", "typeName: " + typeName);
-		Toast.makeText(context, "µ±Ç°ÍøÂç£º" + typeName, Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, "å½“å‰ç½‘ç»œï¼š" + typeName, Toast.LENGTH_SHORT).show();
 	}
 
 }

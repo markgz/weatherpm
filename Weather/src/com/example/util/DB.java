@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DB {
 	private static final String filename = android.os.Environment.getExternalStorageDirectory()+"/weather/database.db";
-	//²éÑ¯Ê¡
+	//æŸ¥è¯¢çœ
 	public static List<Map<String, String>> getProvince(){
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(filename, null);
@@ -27,7 +27,7 @@ public class DB {
         database.close();
         return list;
 	}
-	//²éÑ¯ÊĞ
+	//æŸ¥è¯¢å¸‚
 	public static List<Map<String, String>> getCity(String province){
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(filename, null);
@@ -43,7 +43,7 @@ public class DB {
         database.close();
         return list;
 	}
-	//²éÑ¯ÏØ£¨Çø£©
+	//æŸ¥è¯¢å¿ï¼ˆåŒºï¼‰
 	public static List<Map<String, String>> getCountry(String city){
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(filename, null);
@@ -59,7 +59,7 @@ public class DB {
         database.close();
         return list;
 	}
-	//²éÑ¯µØÖ·idºÅ
+	//æŸ¥è¯¢åœ°å€idå·
 	public static String getAddressId(String country){
 		String result = "";
 		SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(filename, null);
@@ -73,7 +73,7 @@ public class DB {
         database.close();
         return result;
 	}
-	//±£´æÌí¼ÓµÄµØÇøºÍidºÅ
+	//ä¿å­˜æ·»åŠ çš„åœ°åŒºå’Œidå·
 	public static void saveCityAndId(String city, String id){
 		SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(filename, null);
 		ContentValues values = new ContentValues();
@@ -82,7 +82,7 @@ public class DB {
 		database.insert("cityTbl", null, values);
 		database.close();
 	}
-	//²éÑ¯Ìí¼ÓµÄµØÇøºÍidºÅ
+	//æŸ¥è¯¢æ·»åŠ çš„åœ°åŒºå’Œidå·
 	public static List<Map<String, String>> getCityAndId(){
 		List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 		SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(filename, null);
@@ -103,7 +103,7 @@ public class DB {
         database.close();
         return list;
 	}
-	//É¾³ıÖ¸¶¨idµÄµØÇø¼ÇÂ¼
+	//åˆ é™¤æŒ‡å®šidçš„åœ°åŒºè®°å½•
 	public static void deleteCityAndId(String id){
 		SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(filename, null);
 		String SQL = "delete from cityTbl where addressId = '" + id + "'";

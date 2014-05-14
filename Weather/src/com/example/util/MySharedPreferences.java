@@ -1,3 +1,5 @@
+
+
 package com.example.util;
 
 import android.app.Activity;
@@ -6,34 +8,35 @@ import android.content.SharedPreferences;
 public class MySharedPreferences {
 	private Activity acivity;
 	
+	
 	public MySharedPreferences(Activity activity){
 		this.acivity = activity;
 	}
 	/**
-	 * ¶ÁÈ¡¶ÔÓ¦µÄ¼üÖµ
+	 * è¯»å–å¯¹åº”çš„é”®å€¼
 	 * @param key
 	 * @return String
 	 */
 	public int readMessage(String key, int value) {
-		//»ñµÃµ±Ç°µÄSharedPreferences¶ÔÏó
+		//è·å¾—å½“å‰çš„SharedPreferenceså¯¹è±¡
 		SharedPreferences message = acivity.getPreferences(Activity.MODE_PRIVATE);
-		//»ñÈ¡ÏûÏ¢
+		//è·å–æ¶ˆæ¯
 		int tmp = message.getInt(key, value);
 		return tmp;
 	}
 	/**
-	 * ½«¼üÖµ¶ÔĞ´ÈëÅäÖÃÎÄ¼ş
+	 * å°†é”®å€¼å¯¹å†™å…¥é…ç½®æ–‡ä»¶
 	 * @param key
 	 * @param value
 	 */
 	public void writeMessage(String key, int value) {
-		//´´½¨Ò»¸öSharedPreferences¶ÔÏó
+		//åˆ›å»ºä¸€ä¸ªSharedPreferenceså¯¹è±¡
 		SharedPreferences message = acivity.getPreferences(0);
-		//±à¼­SharedPreferences¶ÔÏó
+		//ç¼–è¾‘SharedPreferenceså¯¹è±¡
 		SharedPreferences.Editor editor = message.edit();
-		//²åÈëÒ»¸öÊı¾İ
+		//æ’å…¥ä¸€ä¸ªæ•°æ®
 		editor.putInt(key, value);
-		//Ìá½»Êı¾İ
+		//æäº¤æ•°æ®
 		editor.commit();
 	}
 	public String readMessage(String key, String value) {
