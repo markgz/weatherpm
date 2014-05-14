@@ -51,7 +51,6 @@ import com.example.view.MyPagerAdapter;
 import com.example.view.TrendView;
 
 public class MainActivity extends SherlockActivity {
-	// ²à±ß²Ëµ¥À¸
 	private MenuDrawer mMenuDrawer;
 	private Weather weatherData;
 	// ViewPager
@@ -59,10 +58,9 @@ public class MainActivity extends SherlockActivity {
 	private MyPagerAdapter myAdapter;
 	private LayoutInflater mInflater;
 	private List<View> mListViews;
-	private View layout1 = null; // µÚÒ»¸ö½çÃæ
-	private View layout2 = null; // µÚ¶þ¸ö½çÃæ
+	private View layout1 = null; 
+	private View layout2 = null; 
 
-	// µÚÒ»¸ö½çÃæ×é¼þ
 	private TextView temperature;
 	private TextView refreshTime;
 	private TextView refreshDate;
@@ -74,7 +72,6 @@ public class MainActivity extends SherlockActivity {
 	private TextView tomorrowWeather;
 	private ImageView weatherPic;
 
-	// µÚ¶þ¸ö½çÃæ×é¼þ
 	private TrendView view;
 	private TextView day1TextView;
 	private TextView day2TextView;
@@ -93,21 +90,20 @@ public class MainActivity extends SherlockActivity {
 	private TextView date4TextView;
 	private TextView date5TextView;
 
-	// ²àÃæ²Ëµ¥À¸µØÖ·ÁÐ±í
 	private List<Map<String, String>> addressList;
 	private SimpleAdapter adapter;
 	private ListView menuListView;
 
-	private String id = "101280101"; // Ä¬ÈÏ¹ãÖÝ
+	private String id = "101280101"; 
 
-	private Animation animation; // ½¥±ä¶¯»­
-	private LinearLayout layout; // ¶¯»­ÔØÌå
+	private Animation animation; 
+	private LinearLayout layout; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
-		new WriteToSD(this); // ½«Êý¾Ý¿âÐ´ÈëSD¿¨
+		new WriteToSD(this); 
 		new Constants(this);
 
 		initMenu();
@@ -120,11 +116,10 @@ public class MainActivity extends SherlockActivity {
 		getSupportActionBar().setTitle("Weather");
 		getSupportActionBar().setBackgroundDrawable(
 				this.getResources().getDrawable(R.drawable.base_actionbar_bg));
-		setSupportProgressBarIndeterminateVisibility(false); // ¼ÓÔØ½ø¶ÈÒþ²Ø
+		setSupportProgressBarIndeterminateVisibility(false); 
 
 	}
 
-	// ³õÊ¼»¯²à»¬²Ëµ¥
 	private void initMenu() {
 		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW,
 				Position.LEFT); // WINDOW
@@ -140,13 +135,11 @@ public class MainActivity extends SherlockActivity {
 				R.dimen.slidingmenu_offset));
 	}
 
-	// ³õÊ¼»¯»¬¶¯½çÃæ
 	private void initPage() {
 		mListViews = new ArrayList<View>();
 		mInflater = getLayoutInflater();
 		layout1 = mInflater.inflate(R.layout.activity_main, null);
 		layout2 = mInflater.inflate(R.layout.trend, null);
-		// ½«²¼¾ÖÌí¼Ó½øViewPager
 		mListViews.add(layout1);
 		mListViews.add(layout2);
 
@@ -154,14 +147,14 @@ public class MainActivity extends SherlockActivity {
 		myAdapter = new MyPagerAdapter(mListViews);
 		myViewPager.setAdapter(myAdapter);
 
-		myViewPager.setCurrentItem(0); // ³õÊ¼»¯µ±Ç°ÏÔÊ¾µÄview
+		myViewPager.setCurrentItem(0);
 		myViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			public void onPageSelected(int arg0) {
 				switch (arg0) {
 				case 0:
 					mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
 					break;
-				case 1: // Èç¹û²»ÊÇµÚÒ»Ò³²à²à±ßÀ¸»¬¶¯ÎÞÐ§
+				case 1: 
 					mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_NONE);
 					break;
 				}
@@ -175,9 +168,7 @@ public class MainActivity extends SherlockActivity {
 		});
 	}
 
-	// ³õÊ¼»¯¶¯»­
 	private void initAnim() {
-		// ³ÇÊÐ¼ýÍ·²¹¼ä¶¯»­
 		TextView textView = (TextView) layout1.findViewById(R.id.city);
 		AnimationDrawable ad = (AnimationDrawable) textView
 				.getCompoundDrawables()[0];
@@ -189,16 +180,13 @@ public class MainActivity extends SherlockActivity {
 				.getBackground();
 		treadAD.start();
 
-		// Í¸Ã÷¶È±ä»¯¶¯»­
 		animation = new AlphaAnimation(1, 0);
 		animation.setDuration(700);
 		animation.setRepeatCount(1);
 		animation.setRepeatMode(Animation.REVERSE);
 	}
 
-	// ³õÊ¼»¯¿Ø¼þ
 	private void initWidget() {
-		// µÚÒ»Ò³Ãæ¿Ø¼þ
 		layout = (LinearLayout) layout1.findViewById(R.id.addresslay);
 		temperature = (TextView) layout1.findViewById(R.id.temperature);
 		wind = (TextView) layout1.findViewById(R.id.wind);
@@ -212,7 +200,6 @@ public class MainActivity extends SherlockActivity {
 		tomorrowWeather = (TextView) layout1.findViewById(R.id.tomorroweather);
 		weatherPic = (ImageView) layout1.findViewById(R.id.weatherPic);
 
-		// µÚ¶þÒ³Ãæ¿Ø¼þ
 		DisplayMetrics displayMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 		int screenWidth = displayMetrics.widthPixels;
@@ -258,7 +245,6 @@ public class MainActivity extends SherlockActivity {
 		day5TextView.setText(getDayOfWeek(calendar));
 		date5TextView.setText(getDateFormat(calendar));
 		
-		// µã»÷³ÇÊÐ£¬¸ü»»³ÇÊÐÌìÆø
 		city.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -273,7 +259,6 @@ public class MainActivity extends SherlockActivity {
 				refresh();
 			}
 		});
-		// ²Ëµ¥À¸µØÇøÁÐ±í
 		menuListView = (ListView) findViewById(R.id.menuaddresslist);
 		addressList = new ArrayList<Map<String, String>>();
 		String[] from = new String[] { "address" };
@@ -282,7 +267,6 @@ public class MainActivity extends SherlockActivity {
 				android.R.layout.simple_list_item_single_choice, from, to);
 		menuListView.setAdapter(adapter);
 
-		// ²Ëµ¥À¸µØÇøÌí¼Ó°´Å¥
 		Button add = (Button) mMenuDrawer.findViewById(R.id.addaddress);
 		add.setOnClickListener(new OnClickListener() {
 			@Override
@@ -290,7 +274,6 @@ public class MainActivity extends SherlockActivity {
 				add();
 			}
 		});
-		// µã»÷ÁÐ±íµØÇø¸üÐÂÌìÆø
 		menuListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -301,14 +284,13 @@ public class MainActivity extends SherlockActivity {
 				refresh();
 			}
 		});
-		// ³¤°´É¾³ýµØÇø
 		menuListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				final int index = arg2;
-				final MyDialog d = new MyDialog(MainActivity.this, "ÌáÊ¾",
-						"È·ÈÏÉ¾³ý£¿");
+				final MyDialog d = new MyDialog(MainActivity.this, "ï¿½ï¿½Ê¾",
+						"È·ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½");
 				System.out.println(index);
 				d.show();
 				d.getButton1().setOnClickListener(new OnClickListener() {
@@ -316,7 +298,7 @@ public class MainActivity extends SherlockActivity {
 					public void onClick(View v) {
 						if (menuListView.getCount() <= 1) {
 							Toast.makeText(getApplicationContext(),
-									"ÖÁÉÙÒª±£ÁôÒ»¸öµØÇø", Toast.LENGTH_SHORT).show();
+									"ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 							return;
 						}
 						DB.deleteCityAndId(addressList.get(index).get("id"));
@@ -325,7 +307,7 @@ public class MainActivity extends SherlockActivity {
 						// (menuListView.getCheckedItemPosition()+1)%menuListView.getCount();
 						menuListView.setItemChecked(0, true);
 						adapter.notifyDataSetChanged();
-						Toast.makeText(getApplicationContext(), "É¾³ý³É¹¦",
+						Toast.makeText(getApplicationContext(), "É¾ï¿½ï¿½ï¿½É¹ï¿½",
 								Toast.LENGTH_SHORT).show();
 						d.dismiss();
 					}
@@ -334,7 +316,6 @@ public class MainActivity extends SherlockActivity {
 			}
 		});
 
-		// ³õÊ¼»¯ÔØÈëÊý¾Ý¿âµØÇøÊý¾Ý²¢¸üÐÂ
 		addressList.clear();
 		addressList.addAll(DB.getCityAndId());
 		id = addressList.get(0).get("id");
@@ -410,7 +391,7 @@ public class MainActivity extends SherlockActivity {
 				map.put("address", data.getExtras().getString("address"));
 				map.put("id", id);
 				if (addressList.contains(map)) {
-					Toast.makeText(getApplicationContext(), "µØÇøÒÑ´æÔÚ",
+					Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½",
 							Toast.LENGTH_SHORT).show();
 					break;
 				}
@@ -419,7 +400,7 @@ public class MainActivity extends SherlockActivity {
 				adapter.notifyDataSetChanged();
 				menuListView.setItemChecked(menuListView.getCount() - 1, true);
 
-				DB.saveCityAndId(map.get("address"), id); // ±£´æÌí¼ÓµÄµØÇø
+				DB.saveCityAndId(map.get("address"), id); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄµï¿½ï¿½ï¿½
 			}
 			break;
 		default:
@@ -435,15 +416,14 @@ public class MainActivity extends SherlockActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// ±êÌâÀ¸²Ëµ¥°´Å¥ÊÂ¼þ
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			mMenuDrawer.toggleMenu();
 			break;
-		case 1: // Ìí¼Ó
+		case 1: 
 			add();
 			break;
-		case 0: // ¸üÐÂ
+		case 0: 
 			refresh();
 			break;
 		default:
@@ -452,7 +432,6 @@ public class MainActivity extends SherlockActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	// ×ªµ½µØÇøÑ¡Ôñ½çÃæ
 	private void add() {
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, AddressActivity.class);
@@ -460,11 +439,9 @@ public class MainActivity extends SherlockActivity {
 		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 	}
 
-	// ¸üÐÂÌìÆø
 	private void refresh() {
 		setSupportProgressBarIndeterminateVisibility(true);
 
-		// ÅÐ¶ÏÍøÂç×´Ì¬
 		if (!"NULL".equals(NetworkInfoUtil.getNetWorkType(this))) {
 
 			MenuTask task = new MenuTask();
@@ -499,14 +476,14 @@ public class MainActivity extends SherlockActivity {
 	}
 
 	/**
-	 * Òì²½²éÑ¯ÌìÆø
+	 * ï¿½ì²½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @author Dave
 	 * 
 	 */
 	class MenuTask extends AsyncTask<Integer, Integer, Integer> {
 		@Override
-		protected Integer doInBackground(Integer... i) {// ´¦ÀíºóÌ¨Ö´ÐÐµÄÈÎÎñ£¬ÔÚºóÌ¨Ïß³ÌÖ´ÐÐ
+		protected Integer doInBackground(Integer... i) {
 			WeatherData data = new WeatherData(MainActivity.this);
 			Log.i("TAG", "id: " + id);
 			weatherData = data.getData("http://m.weather.com.cn/data/" + id
@@ -515,8 +492,7 @@ public class MainActivity extends SherlockActivity {
 		}
 
 		@Override
-		protected void onPostExecute(Integer result) {// ºóÌ¨ÈÎÎñÖ´ÐÐÍêÖ®ºó±»µ÷ÓÃ£¬ÔÚuiÏß³ÌÖ´ÐÐ
-			// ¸üÐÂ½çÃæ¿Ø¼þÖµ
+		protected void onPostExecute(Integer result) {
 			Log.i("TAG", "id: " + id + " city: " + weatherData.getCity());
 			city.setText(weatherData.getCity());
 			temperature.setText(weatherData.getTodayTemperature());
@@ -549,7 +525,6 @@ public class MainActivity extends SherlockActivity {
 			wea4TextView.setText(weatherData.getWeather().get(3));
 			wea5TextView.setText(weatherData.getWeather().get(4));
 
-			// Íê³É
 			setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}

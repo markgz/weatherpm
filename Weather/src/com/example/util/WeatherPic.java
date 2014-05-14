@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 /**
- * 根据图片编号返回天气图片
  * 
  * @author Mark
  * 

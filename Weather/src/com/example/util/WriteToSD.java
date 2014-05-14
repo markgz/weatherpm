@@ -10,7 +10,6 @@ import android.content.Context;
 import android.util.Log;
 
 /**
- * 将assets文件夹下的数据库写入SD卡中
  * 
  * @author Dave
  * 

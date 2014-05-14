@@ -19,7 +19,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * ÌìÆøÇ÷ÊÆÕÛÏßÍ¼
  * 
  * @author Mark
  * 
@@ -142,7 +141,7 @@ public class TrendView extends View {
 		int temspace = 8;
 
 		FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-		// ¼ÆËãÎÄ×Ö¸ß¶È
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ß¶ï¿½
 		float fontHeight = fontMetrics.bottom - fontMetrics.top;
 
 		int h = this.h / 2;
@@ -160,7 +159,7 @@ public class TrendView extends View {
 					canvas.drawLine(x[i], h + space, x[i + 1], h + space1,
 							mLinePaint1);
 				}
-				canvas.drawText(topTem.get(i) + "¡ãC", x[i], h2 + space,
+				canvas.drawText(topTem.get(i) + "ï¿½ï¿½C", x[i], h2 + space,
 						mTextPaint);
 				canvas.drawCircle(x[i], h + space, radius, mPointPaint);
 				canvas.drawBitmap(topBmps[i], x[i] - topBmps[i].getWidth() / 2,
@@ -175,7 +174,7 @@ public class TrendView extends View {
 				canvas.drawLine(x[i], h + space, x[i + 1], h + space1,
 						mLinePaint2);
 			}
-			canvas.drawText(lowTem.get(i) + "¡ãC", x[i], h4 + space, mTextPaint);
+			canvas.drawText(lowTem.get(i) + "ï¿½ï¿½C", x[i], h4 + space, mTextPaint);
 			canvas.drawCircle(x[i], h + space, radius, mPointPaint);
 			canvas.drawBitmap(lowBmps[i], x[i] - lowBmps[i].getWidth() / 2, h5
 					+ space, null);
