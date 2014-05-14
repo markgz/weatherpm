@@ -141,7 +141,6 @@ public class TrendView extends View {
 		int temspace = 8;
 
 		FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-		// �������ָ߶�
 		float fontHeight = fontMetrics.bottom - fontMetrics.top;
 
 		int h = this.h / 2;
