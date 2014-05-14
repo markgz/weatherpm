@@ -138,7 +138,7 @@ public class TrendView extends View {
 		super.onDraw(canvas);
 		float space = 0f;
 		float space1 = 0f;
-		int temspace = 8;
+		int temspace = 18;
 
 		FontMetrics fontMetrics = mTextPaint.getFontMetrics();
 		float fontHeight = fontMetrics.bottom - fontMetrics.top;
@@ -158,7 +158,7 @@ public class TrendView extends View {
 					canvas.drawLine(x[i], h + space, x[i + 1], h + space1,
 							mLinePaint1);
 				}
-				canvas.drawText(topTem.get(i) + "��C", x[i], h2 + space,
+				canvas.drawText(topTem.get(i) + "℃", x[i], h2 + space,
 						mTextPaint);
 				canvas.drawCircle(x[i], h + space, radius, mPointPaint);
 				canvas.drawBitmap(topBmps[i], x[i] - topBmps[i].getWidth() / 2,
@@ -173,7 +173,7 @@ public class TrendView extends View {
 				canvas.drawLine(x[i], h + space, x[i + 1], h + space1,
 						mLinePaint2);
 			}
-			canvas.drawText(lowTem.get(i) + "��C", x[i], h4 + space, mTextPaint);
+			canvas.drawText(lowTem.get(i) + "℃", x[i], h4 + space, mTextPaint);
 			canvas.drawCircle(x[i], h + space, radius, mPointPaint);
 			canvas.drawBitmap(lowBmps[i], x[i] - lowBmps[i].getWidth() / 2, h5
 					+ space, null);

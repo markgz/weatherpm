@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Weather</string>
+    <string name="app_name">天气</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="region">地区  +</string>
@@ -9,6 +9,7 @@
     <string name="smsItemNameStr">MarkGZ</string>
     <string name="imgContentDesc">thisIsImage</string>
     <string name="city">城市</string>
+    <string name="gz">广州</string>
     <string name="monday">星期一</string>
     <string name="tuesday">星期二</string>
     <string name="wednesday">星期三</string>
@@ -20,4 +21,15 @@
     <string name="datesample">01/24</string>
     
     <string name="dateformat">dd/MM</string>
+    
+    <string name="usernameDialogTitle">请输入名字</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="developer">开发者</string>
+    <string name="developer_info">开发者信息</string>
+    <string name="developer_email">我的邮箱：markgzpccw@gmail.com</string>
+    <string name="only_email">markgzpccw@gmail.com</string>
+    <string name="connect_me">联系我</string>
+    <string name="use_which_one_to_send">使用以下应用发送Email</string>
+    <string name="settingbg">设置背景</string>
 </resources>

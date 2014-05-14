@@ -16,9 +16,10 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.entity.Weather;
-
 import android.app.Activity;
+import android.util.Log;
+
+import com.example.entity.Weather;
 
 /**
  * @author Mark
@@ -32,6 +33,7 @@ public class WeatherData {
 	}
 
 	public Weather getData(String strUrl) {
+		Log.i("TAG","Url: "+strUrl);
 		return parseJson(connServerForResult(strUrl));
 	}
 
@@ -164,7 +166,7 @@ public class WeatherData {
 	}
 
 	private String getDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("MM��dd�� EEE",
+		SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日 EEE",
 				Locale.CHINA);
 		String date = sdf.format(new java.util.Date());
 		System.out.println(date);
@@ -173,7 +175,7 @@ public class WeatherData {
 
 	private String getTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.CHINA);
-		String time = sdf.format(new java.util.Date()) + " " + "����";
+		String time = sdf.format(new java.util.Date()) + " " + "更新";
 		System.out.println(time);
 		return time;
 	}
@@ -189,7 +191,7 @@ public class WeatherData {
 	private List<Integer> transplate(List<String> strList) {
 		List<Integer> intList = new ArrayList<Integer>();
 		for (String temp : strList) {
-			intList.add(Integer.valueOf(temp.split("��")[0]));
+			intList.add(Integer.valueOf(temp.split("℃")[0]));
 		}
 		return intList;
 	}

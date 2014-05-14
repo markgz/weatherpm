@@ -43,7 +43,7 @@ public class AddressActivity extends SherlockActivity {
 		getSupportActionBar().setLogo(R.drawable.icon);
 		getSupportActionBar().setTitle("City");
 		getSupportActionBar().setBackgroundDrawable(
-				this.getResources().getDrawable(R.drawable.base_actionbar_bg));
+				this.getResources().getDrawable(R.drawable.action_bar_bg));
 
 		state = 0;
 		provinceTV = (TextView) findViewById(R.id.provinceText);
@@ -144,7 +144,7 @@ public class AddressActivity extends SherlockActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(0, 1, 0, "delete")
-				.setIcon(R.drawable.ic_fun_delete)
+				.setIcon(R.drawable.checkbox_checked)
 				.setShowAsAction(
 						MenuItem.SHOW_AS_ACTION_IF_ROOM
 								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);

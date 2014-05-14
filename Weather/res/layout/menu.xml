@@ -16,49 +16,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/camera_lens_lomo"
+            android:background="@drawable/user_icon_default"
             android:contentDescription="@string/imgContentDesc"
             android:focusable="false" />
 
         <LinearLayout
+            android:id="@+id/smsItemNameLayout"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center_vertical"
+            android:clickable="true"
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/smsItemName"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="bottom" >
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:text="@string/smsItemNameStr"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/smsItemName"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:text="@string/smsItemNameStr"
-                    android:textColor="@color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical" >
-
-                <TextView
-                    android:id="@+id/smsItemContent"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:gravity="center_vertical"
-                    android:text="@string/smsItemContentStr"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
@@ -74,11 +54,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/add_btn"
-        android:gravity="center_vertical"
+        android:gravity="center_vertical|center_horizontal"
         android:padding="10dp"
         android:text="@string/region"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="22sp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -87,10 +67,12 @@
         android:focusable="false"
         android:focusableInTouchMode="false" />
 
+
     <ListView
         android:id="@+id/menuaddresslist"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/transparent"
         android:choiceMode="singleChoice"
         android:divider="@drawable/biz_main_tab_divider"
@@ -99,4 +81,28 @@
         android:headerDividersEnabled="true" >
     </ListView>
 
+    
+    <Button
+        android:id="@+id/bg_setting_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/settingbg"
+        android:background="@drawable/add_btn"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+    
+    <Button
+        android:id="@+id/developer_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/developer"
+        android:background="@drawable/add_btn"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </LinearLayout>

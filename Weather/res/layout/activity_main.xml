@@ -5,12 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
+    <ImageView
+        android:id="@+id/weatherPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="25dp"
+        android:src="@drawable/wip_showers" />
+    
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_below="@id/weatherPic"
+        android:layout_alignParentLeft="true"
         android:layout_margin="10dp"
         android:gravity="right"
         android:orientation="vertical" >
@@ -24,7 +33,7 @@
             android:shadowRadius="14"
             android:text="21℃"
             android:textColor="@color/abs__holo_blue_light"
-            android:textSize="48sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/weather"
@@ -32,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="天气"
             android:textColor="@color/abs__holo_blue_light"
-            android:textSize="14sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/refreshTime"
@@ -42,13 +51,23 @@
             android:textColor="@color/abs__holo_blue_light"
             android:textSize="14sp" />
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
+    
+     <RelativeLayout
+         android:id="@+id/tommorrowlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" >
+
+        <include layout="@layout/tomorroweather" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tommorrowlayout"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/linearLayout1"
         android:layout_margin="10dp"
         android:orientation="vertical" >
 
@@ -59,7 +78,7 @@
             android:layout_marginBottom="5dp"
             android:text="舒服度"
             android:textColor="@color/abs__holo_blue_light"
-            android:textSize="20sp" />
+            android:textSize="32sp" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -75,7 +94,7 @@
             android:layout_height="wrap_content"
             android:text="风向"
             android:textColor="@color/abs__holo_blue_light"
-            android:textSize="14sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/refreshDate"
@@ -86,30 +105,17 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/weatherPic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="19dp"
-        android:src="@drawable/wip_showers" />
+    
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" >
-
-        <include layout="@layout/tomorroweather" />
-    </RelativeLayout>
+   
 
     <LinearLayout
         android:id="@+id/addresslay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
+        android:layout_below="@id/linearLayout1"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -120,7 +126,7 @@
             android:shadowColor="@color/light_blue"
             android:drawableLeft="@anim/cityarrow"
             android:shadowRadius="4"
-            android:text="@string/city"
+            android:text="@string/gz"
             android:textColor="@color/white"
             android:textSize="24sp" />
         
@@ -131,7 +137,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_alignTop="@id/addresslay"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal" >
 
         <ImageView

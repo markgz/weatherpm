@@ -1,4 +1,3 @@
-
 package com.example.weather;
 
 import java.text.SimpleDateFormat;
@@ -11,10 +10,22 @@ import java.util.Map;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
@@ -28,6 +39,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -58,8 +70,8 @@ public class MainActivity extends SherlockActivity {
 	private MyPagerAdapter myAdapter;
 	private LayoutInflater mInflater;
 	private List<View> mListViews;
-	private View layout1 = null; 
-	private View layout2 = null; 
+	private View layout1 = null;
+	private View layout2 = null;
 
 	private TextView temperature;
 	private TextView refreshTime;
@@ -94,16 +106,28 @@ public class MainActivity extends SherlockActivity {
 	private SimpleAdapter adapter;
 	private ListView menuListView;
 
-	private String id = "101280101"; 
+	private String id = "101280101";
 
-	private Animation animation; 
-	private LinearLayout layout; 
+	private Animation animation;
+	private LinearLayout layout;
+
+	private TextView usernameTextView;
+
+	private SharedPreferences sharedPreferences;
+
+	private TextView developerButton;
+
+	private Button bgSettingButton;
+
+	private static final int IMG_REQUEST_CODE = 100;
+
+	private static final int IMG_RESULT_CODE = 101;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
-		new WriteToSD(this); 
+		new WriteToSD(this);
 		new Constants(this);
 
 		initMenu();
@@ -113,10 +137,11 @@ public class MainActivity extends SherlockActivity {
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setLogo(R.drawable.icon);
-		getSupportActionBar().setTitle("Weather");
+		getSupportActionBar().setTitle(
+				getResources().getString(R.string.app_name));
 		getSupportActionBar().setBackgroundDrawable(
-				this.getResources().getDrawable(R.drawable.base_actionbar_bg));
-		setSupportProgressBarIndeterminateVisibility(false); 
+				this.getResources().getDrawable(R.drawable.action_bar_bg));
+		setSupportProgressBarIndeterminateVisibility(false);
 
 	}
 
@@ -133,6 +158,7 @@ public class MainActivity extends SherlockActivity {
 		mMenuDrawer.setHardwareLayerEnabled(false);
 		mMenuDrawer.setMenuSize((int) getResources().getDimension(
 				R.dimen.slidingmenu_offset));
+
 	}
 
 	private void initPage() {
@@ -154,7 +180,7 @@ public class MainActivity extends SherlockActivity {
 				case 0:
 					mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
 					break;
-				case 1: 
+				case 1:
 					mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_NONE);
 					break;
 				}
@@ -228,23 +254,149 @@ public class MainActivity extends SherlockActivity {
 
 		day1TextView.setText(getDayOfWeek(calendar));
 		date1TextView.setText(getDateFormat(calendar));
-		
+
 		calendar.add(Calendar.DAY_OF_WEEK, 1);
 		day2TextView.setText(getDayOfWeek(calendar));
 		date2TextView.setText(getDateFormat(calendar));
-		
+
 		calendar.add(Calendar.DAY_OF_WEEK, 1);
 		day3TextView.setText(getDayOfWeek(calendar));
 		date3TextView.setText(getDateFormat(calendar));
-		
+
 		calendar.add(Calendar.DAY_OF_WEEK, 1);
 		day4TextView.setText(getDayOfWeek(calendar));
 		date4TextView.setText(getDateFormat(calendar));
-		
+
 		calendar.add(Calendar.DAY_OF_WEEK, 1);
 		day5TextView.setText(getDayOfWeek(calendar));
 		date5TextView.setText(getDateFormat(calendar));
-		
+
+		usernameTextView = (TextView) findViewById(R.id.smsItemName);
+
+		sharedPreferences = getSharedPreferences("config", Context.MODE_PRIVATE);
+
+		usernameTextView.setText(sharedPreferences.getString("username",
+				"Click me"));
+
+		usernameTextView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						MainActivity.this);
+				builder.setTitle(getResources().getString(
+						R.string.usernameDialogTitle));
+				final EditText editText = new EditText(MainActivity.this);
+				editText.setHint(getResources().getString(
+						R.string.usernameDialogTitle));
+				builder.setView(editText);
+				builder.setPositiveButton(
+						getResources().getString(R.string.confirm),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+								usernameTextView.setText(editText.getText()
+										.toString());
+								Editor editor = sharedPreferences.edit();
+								editor.putString("username", editText.getText()
+										.toString());
+								editor.commit();
+							}
+						});
+				builder.setNegativeButton(
+						getResources().getString(R.string.cancel),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+							}
+						});
+				builder.show();
+				;
+
+			}
+		});
+
+		developerButton = (TextView) findViewById(R.id.developer_button);
+
+		developerButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						MainActivity.this);
+				builder.setTitle(getResources().getString(
+						R.string.developer_info));
+
+				builder.setMessage(getResources().getString(
+						R.string.developer_email));
+				builder.setPositiveButton(
+						getResources().getString(R.string.connect_me),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+								Intent emailIntent = new Intent(
+										Intent.ACTION_SENDTO,
+										Uri.parse("mailto:"
+												+ getResources().getString(
+														R.string.only_email)));
+
+								emailIntent.putExtra(
+										android.content.Intent.EXTRA_SUBJECT,
+										"用户反馈");
+								emailIntent.putExtra(
+										android.content.Intent.EXTRA_TEXT,
+										"你好，");
+
+								startActivity(Intent
+										.createChooser(
+												emailIntent,
+												getResources()
+														.getString(
+																R.string.use_which_one_to_send)));
+
+							}
+						});
+				builder.setNegativeButton(
+						getResources().getString(R.string.cancel),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+							}
+						});
+				builder.show();
+				;
+
+			}
+		});
+
+		bgSettingButton = (Button) findViewById(R.id.bg_setting_button);
+
+		bgSettingButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				Intent pickIntent = new Intent(Intent.ACTION_PICK);
+				pickIntent.setType("image/*");
+				startActivityForResult(pickIntent, IMG_REQUEST_CODE);
+			}
+		});
+
 		city.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -289,8 +441,8 @@ public class MainActivity extends SherlockActivity {
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				final int index = arg2;
-				final MyDialog d = new MyDialog(MainActivity.this, "��ʾ",
-						"ȷ��ɾ����");
+				final MyDialog d = new MyDialog(MainActivity.this, "提示",
+						"确认删除？");
 				System.out.println(index);
 				d.show();
 				d.getButton1().setOnClickListener(new OnClickListener() {
@@ -298,7 +450,7 @@ public class MainActivity extends SherlockActivity {
 					public void onClick(View v) {
 						if (menuListView.getCount() <= 1) {
 							Toast.makeText(getApplicationContext(),
-									"����Ҫ����һ������", Toast.LENGTH_SHORT).show();
+									"至少要保留一个地区", Toast.LENGTH_SHORT).show();
 							return;
 						}
 						DB.deleteCityAndId(addressList.get(index).get("id"));
@@ -307,7 +459,7 @@ public class MainActivity extends SherlockActivity {
 						// (menuListView.getCheckedItemPosition()+1)%menuListView.getCount();
 						menuListView.setItemChecked(0, true);
 						adapter.notifyDataSetChanged();
-						Toast.makeText(getApplicationContext(), "ɾ���ɹ�",
+						Toast.makeText(getApplicationContext(), "删除成功",
 								Toast.LENGTH_SHORT).show();
 						d.dismiss();
 					}
@@ -369,15 +521,17 @@ public class MainActivity extends SherlockActivity {
 		}
 		return day;
 	}
-	
-	public String getDateFormat(Calendar calendar){
+
+	@SuppressLint("SimpleDateFormat")
+	public String getDateFormat(Calendar calendar) {
 		String formatDate = "";
 		Date date = calendar.getTime();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(R.string.dateformat));
-		//new SimpleDateFormat("", new Local);
+
+		SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(
+				R.string.dateformat));
+		// new SimpleDateFormat("", new Local);
 		formatDate = sdf.format(date);
-		
+
 		return formatDate;
 	}
 
@@ -391,7 +545,7 @@ public class MainActivity extends SherlockActivity {
 				map.put("address", data.getExtras().getString("address"));
 				map.put("id", id);
 				if (addressList.contains(map)) {
-					Toast.makeText(getApplicationContext(), "�����Ѵ���",
+					Toast.makeText(getApplicationContext(), "城市已添加",
 							Toast.LENGTH_SHORT).show();
 					break;
 				}
@@ -400,8 +554,28 @@ public class MainActivity extends SherlockActivity {
 				adapter.notifyDataSetChanged();
 				menuListView.setItemChecked(menuListView.getCount() - 1, true);
 
-				DB.saveCityAndId(map.get("address"), id); // ������ӵĵ���
+				DB.saveCityAndId(map.get("address"), id);
 			}
+			break;
+		case IMG_REQUEST_CODE:
+
+			Uri selectedImg = data.getData();
+
+			String[] filePathColumn = new String[] { MediaStore.Images.Media.DATA };
+
+			Cursor cursor = getContentResolver().query(selectedImg,
+					filePathColumn, null, null, null);
+			String filePath = "";
+			if (cursor.moveToFirst()) {
+				filePath = cursor.getString(cursor
+						.getColumnIndex(filePathColumn[0]));
+				cursor.close();
+			}
+
+			// Bitmap yourSelectedImg = BitmapFactory.decodeFile(filePath);
+			Log.i("TAG", "filePath: " + filePath);
+			// mMenuDrawer.setBackgroundDrawable(Drawable.createFromPath(filePath));
+
 			break;
 		default:
 			break;
@@ -420,10 +594,10 @@ public class MainActivity extends SherlockActivity {
 		case android.R.id.home:
 			mMenuDrawer.toggleMenu();
 			break;
-		case 1: 
+		case 1:
 			add();
 			break;
-		case 0: 
+		case 0:
 			refresh();
 			break;
 		default:
@@ -447,6 +621,8 @@ public class MainActivity extends SherlockActivity {
 			MenuTask task = new MenuTask();
 			task.execute(0);
 			layout.startAnimation(animation);
+		} else {
+			Toast.makeText(this, "请开启网络", Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -475,57 +651,57 @@ public class MainActivity extends SherlockActivity {
 
 	}
 
-	/**
-	 * �첽��ѯ����
-	 * 
-	 * @author Dave
-	 * 
-	 */
 	class MenuTask extends AsyncTask<Integer, Integer, Integer> {
 		@Override
 		protected Integer doInBackground(Integer... i) {
 			WeatherData data = new WeatherData(MainActivity.this);
 			Log.i("TAG", "id: " + id);
-			weatherData = data.getData("http://m.weather.com.cn/data/" + id
+			weatherData = data.getData("http://m.weather.com.cn/atad/" + id
 					+ ".html");
 			return 0;
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			Log.i("TAG", "id: " + id + " city: " + weatherData.getCity());
-			city.setText(weatherData.getCity());
-			temperature.setText(weatherData.getTodayTemperature());
-			if (weatherData.getWeather().get(0).equals("")) {
-				weather.setText(weatherData.getTodayWeather());
-			} else {
-				weather.setText(weatherData.getWeather().get(0));
+
+			if (weatherData != null) {
+				Log.i("TAG", "id: " + id + " city: " + weatherData.getCity());
+
+				city.setText(weatherData.getCity());
+				temperature.setText(weatherData.getTodayTemperature());
+				if (weatherData.getWeather().get(0).equals("")) {
+					weather.setText(weatherData.getTodayWeather());
+				} else {
+					weather.setText(weatherData.getWeather().get(0));
+				}
+				wind.setText(weatherData.getWind().get(0));
+				comfortable.setText(weatherData.getComfortable());
+				tomorrowTemperature.setText(weatherData
+						.getTomorrowTemperature());
+				tomorrowWeather.setText(weatherData.getTomorrowWeather());
+				refreshDate.setText(weatherData.getRefreshDate());
+				refreshTime.setText(weatherData.getRefreshTime());
+				weatherPic.setImageBitmap(WeatherPic.getPic(
+						getApplicationContext(), weatherData.getPicIndex(),
+						weatherData.isNight() ? 1 : 0));
+
+				view.setTemperature(weatherData.getMaxlist(),
+						weatherData.getMinlist());
+				view.setBitmap(weatherData.getTopPic(), weatherData.getLowPic());
+
+				if (!weatherData.getWeather().get(0).equals("")) {
+					wea1TextView.setText(weatherData.getWeather().get(0));
+				} else {
+					wea1TextView.setText(weatherData.getTodayWeather());
+				}
+				wea2TextView.setText(weatherData.getWeather().get(1));
+				wea3TextView.setText(weatherData.getWeather().get(2));
+				wea4TextView.setText(weatherData.getWeather().get(3));
+				wea5TextView.setText(weatherData.getWeather().get(4));
+
+				setSupportProgressBarIndeterminateVisibility(false);
 			}
-			wind.setText(weatherData.getWind().get(0));
-			comfortable.setText(weatherData.getComfortable());
-			tomorrowTemperature.setText(weatherData.getTomorrowTemperature());
-			tomorrowWeather.setText(weatherData.getTomorrowWeather());
-			refreshDate.setText(weatherData.getRefreshDate());
-			refreshTime.setText(weatherData.getRefreshTime());
-			weatherPic.setImageBitmap(WeatherPic.getPic(
-					getApplicationContext(), weatherData.getPicIndex(),
-					weatherData.isNight() ? 1 : 0));
 
-			view.setTemperature(weatherData.getMaxlist(),
-					weatherData.getMinlist());
-			view.setBitmap(weatherData.getTopPic(), weatherData.getLowPic());
-
-			if (!weatherData.getWeather().get(0).equals("")) {
-				wea1TextView.setText(weatherData.getWeather().get(0));
-			} else {
-				wea1TextView.setText(weatherData.getTodayWeather());
-			}
-			wea2TextView.setText(weatherData.getWeather().get(1));
-			wea3TextView.setText(weatherData.getWeather().get(2));
-			wea4TextView.setText(weatherData.getWeather().get(3));
-			wea5TextView.setText(weatherData.getWeather().get(4));
-
-			setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}
 }
