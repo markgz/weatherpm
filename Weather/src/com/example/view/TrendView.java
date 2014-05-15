@@ -1,4 +1,3 @@
-
 package com.example.view;
 
 import java.util.ArrayList;
@@ -68,7 +67,6 @@ public class TrendView extends View {
 		mPointPaint = new Paint();
 		mPointPaint.setAntiAlias(true);
 		mPointPaint.setColor(Color.BLUE);
-		
 
 		mLinePaint1 = new Paint();
 		mLinePaint1.setColor(Color.RED);
@@ -84,7 +82,7 @@ public class TrendView extends View {
 
 		mTextPaint = new Paint();
 		mTextPaint.setAntiAlias(true);
-		mTextPaint.setColor(Color.BLUE);
+		mTextPaint.setColor(getResources().getColor(com.example.absdemo.R.color.my__holo_blue_light));
 		mTextPaint.setTextSize(25F);
 		mTextPaint.setTextAlign(Align.CENTER);
 	}
@@ -106,9 +104,9 @@ public class TrendView extends View {
 
 		x[0] = distanceUnit;
 		for (int i = 1; i < count; i++) {
-			
-			x[i] = x[i-1] + pointDistance;
-			
+
+			x[i] = x[i - 1] + pointDistance;
+
 		}
 
 		this.h = h;
@@ -140,7 +138,7 @@ public class TrendView extends View {
 		super.onDraw(canvas);
 		float space = 0f;
 		float space1 = 0f;
-		int temspace = 18;
+		int temspace = 10;
 
 		FontMetrics fontMetrics = mTextPaint.getFontMetrics();
 		float fontHeight = fontMetrics.bottom - fontMetrics.top;
@@ -152,6 +150,13 @@ public class TrendView extends View {
 		int h4 = (int) (h + fontHeight);
 		int h5 = (int) (h + fontHeight);
 
+		
+		canvas.drawLine(x[0], 50 , x[0]+60, 50, mLinePaint1);
+		canvas.drawText("最高温度 ℃", x[0]+140, 57, mTextPaint);
+		
+		canvas.drawLine(x[0], 80 , x[0]+60, 80, mLinePaint2);
+		canvas.drawText("最低温度 ℃", x[0]+140, 87, mTextPaint);
+
 		for (int i = 0; i < topTem.size(); i++) {
 			space = (-topTem.get(i)) * temspace;
 			if (topTem.get(i) != 100) {
@@ -160,10 +165,12 @@ public class TrendView extends View {
 					canvas.drawLine(x[i], h + space, x[i + 1], h + space1,
 							mLinePaint1);
 				}
-				if(i == 0){
-					mTextPaint.setColor(getResources().getColor(com.example.absdemo.R.color.my__holo_blue_light));
-					mPointPaint.setColor(getResources().getColor(com.example.absdemo.R.color.my__holo_blue_light));
-				}else{
+				if (i == 0) {
+					mTextPaint.setColor(getResources().getColor(
+							com.example.absdemo.R.color.my__holo_blue_light));
+					mPointPaint.setColor(getResources().getColor(
+							com.example.absdemo.R.color.my__holo_blue_light));
+				} else {
 					mTextPaint.setColor(Color.WHITE);
 					mPointPaint.setColor(Color.WHITE);
 				}
@@ -182,14 +189,16 @@ public class TrendView extends View {
 				canvas.drawLine(x[i], h + space, x[i + 1], h + space1,
 						mLinePaint2);
 			}
-			if(i == 0){
-				mTextPaint.setColor(getResources().getColor(com.example.absdemo.R.color.my__holo_blue_light));
-				mPointPaint.setColor(getResources().getColor(com.example.absdemo.R.color.my__holo_blue_light));
-			}else{
+			if (i == 0) {
+				mTextPaint.setColor(getResources().getColor(
+						com.example.absdemo.R.color.my__holo_blue_light));
+				mPointPaint.setColor(getResources().getColor(
+						com.example.absdemo.R.color.my__holo_blue_light));
+			} else {
 				mTextPaint.setColor(Color.WHITE);
 				mPointPaint.setColor(Color.WHITE);
 			}
-			
+
 			canvas.drawText(lowTem.get(i) + "℃", x[i], h4 + space, mTextPaint);
 			canvas.drawCircle(x[i], h + space, radius, mPointPaint);
 			canvas.drawBitmap(lowBmps[i], x[i] - lowBmps[i].getWidth() / 2, h5

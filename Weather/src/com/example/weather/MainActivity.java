@@ -545,7 +545,7 @@ public class MainActivity extends SherlockActivity {
 
 								// mMenuDrawer.setBackgroundDrawable(background);
 								viewpagerLayout
-										.setBackgroundResource(R.drawable.bg_rain_night);
+										.setBackgroundResource(R.drawable.bg_girl_first);
 
 								// viewpagerLayout.setBackgroundDrawable(background);
 
