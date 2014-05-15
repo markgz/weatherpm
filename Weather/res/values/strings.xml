@@ -32,4 +32,6 @@
     <string name="connect_me">联系我</string>
     <string name="use_which_one_to_send">使用以下应用发送Email</string>
     <string name="settingbg">设置背景</string>
+    <string name="defaultBG">默认背景</string>
+    <string name="customBG">自定义</string>
 </resources>

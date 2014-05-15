@@ -7,6 +7,7 @@ import java.util.List;
 import com.example.util.Constants;
 import com.example.util.WeatherPic;
 
+import android.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -66,23 +67,24 @@ public class TrendView extends View {
 
 		mPointPaint = new Paint();
 		mPointPaint.setAntiAlias(true);
-		mPointPaint.setColor(Color.WHITE);
+		mPointPaint.setColor(Color.BLUE);
+		
 
 		mLinePaint1 = new Paint();
-		mLinePaint1.setColor(Color.YELLOW);
+		mLinePaint1.setColor(Color.RED);
 		mLinePaint1.setAntiAlias(true);
 		mLinePaint1.setStrokeWidth(4);
 		mLinePaint1.setStyle(Style.FILL);
 
 		mLinePaint2 = new Paint();
-		mLinePaint2.setColor(Color.BLUE);
+		mLinePaint2.setColor(Color.GREEN);
 		mLinePaint2.setAntiAlias(true);
 		mLinePaint2.setStrokeWidth(4);
 		mLinePaint2.setStyle(Style.FILL);
 
 		mTextPaint = new Paint();
 		mTextPaint.setAntiAlias(true);
-		mTextPaint.setColor(Color.WHITE);
+		mTextPaint.setColor(Color.BLUE);
 		mTextPaint.setTextSize(25F);
 		mTextPaint.setTextAlign(Align.CENTER);
 	}
@@ -158,6 +160,13 @@ public class TrendView extends View {
 					canvas.drawLine(x[i], h + space, x[i + 1], h + space1,
 							mLinePaint1);
 				}
+				if(i == 0){
+					mTextPaint.setColor(getResources().getColor(com.example.absdemo.R.color.my__holo_blue_light));
+					mPointPaint.setColor(getResources().getColor(com.example.absdemo.R.color.my__holo_blue_light));
+				}else{
+					mTextPaint.setColor(Color.WHITE);
+					mPointPaint.setColor(Color.WHITE);
+				}
 				canvas.drawText(topTem.get(i) + "℃", x[i], h2 + space,
 						mTextPaint);
 				canvas.drawCircle(x[i], h + space, radius, mPointPaint);
@@ -173,6 +182,14 @@ public class TrendView extends View {
 				canvas.drawLine(x[i], h + space, x[i + 1], h + space1,
 						mLinePaint2);
 			}
+			if(i == 0){
+				mTextPaint.setColor(getResources().getColor(com.example.absdemo.R.color.my__holo_blue_light));
+				mPointPaint.setColor(getResources().getColor(com.example.absdemo.R.color.my__holo_blue_light));
+			}else{
+				mTextPaint.setColor(Color.WHITE);
+				mPointPaint.setColor(Color.WHITE);
+			}
+			
 			canvas.drawText(lowTem.get(i) + "℃", x[i], h4 + space, mTextPaint);
 			canvas.drawCircle(x[i], h + space, radius, mPointPaint);
 			canvas.drawBitmap(lowBmps[i], x[i] - lowBmps[i].getWidth() / 2, h5

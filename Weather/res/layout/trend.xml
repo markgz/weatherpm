@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/sunday" 
-            android:textColor="#FFFFFF"
+            android:textColor="@color/abs__holo_blue_light"
             android:gravity="center_horizontal"/>
 
         <TextView
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/sunshine" 
-            android:textColor="#FFFFFF"
+            android:textColor="@color/abs__holo_blue_light"
             android:gravity="center_horizontal"/>
 
         <TextView
@@ -158,7 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/datesample"
-            android:textColor="#FFFFFF" 
+            android:textColor="@color/abs__holo_blue_light"
             android:gravity="center_horizontal"/>
 
         <TextView

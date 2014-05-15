@@ -10,7 +10,7 @@ import android.sax.StartElementListener;
 import android.util.Log;
 import android.widget.Toast;
 
-public class NetworkChangeReceiver extends BroadcastReceiver {
+public class NetworkChangeReceiverDP extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -23,10 +23,10 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 		
 		if("mobile".equals(typeName)||"WIFI".equals(typeName)){
 			
-			Intent intent2 = new Intent(context,MainActivity.class);
+			/*Intent intent2 = new Intent(context,MainActivity.class);
 			intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			context.startActivity(intent2);
+			context.startActivity(intent2);*/
 		}
 	}
-
+	
 }

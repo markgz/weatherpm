@@ -12,19 +12,22 @@ import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -63,7 +66,7 @@ import com.example.view.MyPagerAdapter;
 import com.example.view.TrendView;
 
 public class MainActivity extends SherlockActivity {
-	private MenuDrawer mMenuDrawer;
+	private static MenuDrawer mMenuDrawer;
 	private Weather weatherData;
 	// ViewPager
 	public ViewPager myViewPager;
@@ -113,7 +116,7 @@ public class MainActivity extends SherlockActivity {
 
 	private TextView usernameTextView;
 
-	private SharedPreferences sharedPreferences;
+	private static SharedPreferences sharedPreferences;
 
 	private TextView developerButton;
 
@@ -121,7 +124,47 @@ public class MainActivity extends SherlockActivity {
 
 	private static final int IMG_REQUEST_CODE = 100;
 
-	private static final int IMG_RESULT_CODE = 101;
+	private static final int IMG_MESSAGE_WHAT = 101;
+
+	NetworkChangeReceiver networkChangeReceiver;
+
+	private String imgStoreFolderName = "weather/bgImage";
+
+	public static Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case IMG_MESSAGE_WHAT:
+
+				String imgPath = msg.obj.toString();
+
+				Drawable background = Drawable.createFromPath(imgPath);
+
+				LinearLayout viewpagerLayout = (LinearLayout) mMenuDrawer
+						.findViewById(R.id.background_layout);
+
+				// mMenuDrawer.setBackgroundDrawable(background);
+
+				viewpagerLayout.setBackgroundDrawable(background);
+
+				Editor editor = sharedPreferences.edit();
+				editor.putBoolean("customBG", true);
+				editor.putString("bgImgPath", imgPath);
+				editor.commit();
+
+				Log.i("TAG", "set background imgpath: " + imgPath);
+
+				break;
+
+			default:
+				break;
+			}
+		}
+
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +172,8 @@ public class MainActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		new WriteToSD(this);
 		new Constants(this);
+
+		sharedPreferences = getSharedPreferences("config", Context.MODE_PRIVATE);
 
 		initMenu();
 		initPage();
@@ -142,6 +187,64 @@ public class MainActivity extends SherlockActivity {
 		getSupportActionBar().setBackgroundDrawable(
 				this.getResources().getDrawable(R.drawable.action_bar_bg));
 		setSupportProgressBarIndeterminateVisibility(false);
+
+		registerNetworkChangeReceiver();
+
+	}
+
+	public void registerNetworkChangeReceiver() {
+
+		// create a intentFilter for CONNECTIVITY_CHANGE
+		IntentFilter intentFilter = new IntentFilter(
+				"android.net.conn.CONNECTIVITY_CHANGE");
+
+		// set a high priority for this intentFilter
+		intentFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+		// create new instance of the BroadcasteReceiver's
+		// subclass(NetworkChangeReceiver)
+		networkChangeReceiver = new NetworkChangeReceiver();
+		// register the broadcastReceiver
+		registerReceiver(networkChangeReceiver, intentFilter);
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onPause();
+
+		// unregister the broadcastReceiver when activity is paused
+		if (networkChangeReceiver != null) {
+
+			try {
+				unregisterReceiver(networkChangeReceiver);
+
+			} catch (IllegalArgumentException e) {
+				Log.e("TAG", "your Recevier is not registed...");
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	public class NetworkChangeReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+
+			String typeName = NetworkInfoUtil.getNetWorkType(context);
+			Log.i("TAG", "typeName: " + typeName);
+			Log.i("TAG", "Intent.Action: " + intent.getAction()
+					+ " intent.extra: " + intent.getExtras().toString());
+			Toast.makeText(context,
+					"当前网络：" + (typeName.equals("NULL") ? "已断开" : typeName),
+					Toast.LENGTH_SHORT).show();
+
+			if ("mobile".equals(typeName) || "WIFI".equals(typeName)) {
+
+				refresh();
+			}
+		}
 
 	}
 
@@ -159,6 +262,19 @@ public class MainActivity extends SherlockActivity {
 		mMenuDrawer.setMenuSize((int) getResources().getDimension(
 				R.dimen.slidingmenu_offset));
 
+		boolean customBG = sharedPreferences.getBoolean("customBG", false);
+		if (customBG) {
+
+			String bgImgPath = sharedPreferences.getString("bgImgPath", "");
+
+			Drawable background = Drawable.createFromPath(bgImgPath);
+
+			LinearLayout viewpagerLayout = (LinearLayout) mMenuDrawer
+					.findViewById(R.id.background_layout);
+
+			viewpagerLayout.setBackgroundDrawable(background);
+
+		}
 	}
 
 	private void initPage() {
@@ -273,8 +389,6 @@ public class MainActivity extends SherlockActivity {
 
 		usernameTextView = (TextView) findViewById(R.id.smsItemName);
 
-		sharedPreferences = getSharedPreferences("config", Context.MODE_PRIVATE);
-
 		usernameTextView.setText(sharedPreferences.getString("username",
 				"Click me"));
 
@@ -317,6 +431,7 @@ public class MainActivity extends SherlockActivity {
 
 							}
 						});
+				builder.setCancelable(false);
 				builder.show();
 				;
 
@@ -377,6 +492,7 @@ public class MainActivity extends SherlockActivity {
 
 							}
 						});
+				builder.setCancelable(false);
 				builder.show();
 				;
 
@@ -391,9 +507,58 @@ public class MainActivity extends SherlockActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				Intent pickIntent = new Intent(Intent.ACTION_PICK);
-				pickIntent.setType("image/*");
-				startActivityForResult(pickIntent, IMG_REQUEST_CODE);
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						MainActivity.this);
+
+				builder.setTitle(getResources().getString(R.string.settingbg));
+
+				builder.setPositiveButton(
+						getResources().getString(R.string.customBG),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+								Intent pickIntent = new Intent(
+										Intent.ACTION_PICK);
+								pickIntent.setType("image/*");
+								startActivityForResult(pickIntent,
+										IMG_REQUEST_CODE);
+							}
+						});
+
+				builder.setNegativeButton(
+						getResources().getString(R.string.defaultBG),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+								// String imgPath = msg.obj.toString();
+
+								// Drawable background = getAssets()
+
+								LinearLayout viewpagerLayout = (LinearLayout) mMenuDrawer
+										.findViewById(R.id.background_layout);
+
+								// mMenuDrawer.setBackgroundDrawable(background);
+								viewpagerLayout
+										.setBackgroundResource(R.drawable.bg_rain_night);
+
+								// viewpagerLayout.setBackgroundDrawable(background);
+
+								Editor editor = sharedPreferences.edit();
+								editor.putBoolean("customBG", false);
+								editor.putString("bgImgPath", "");
+								editor.commit();
+
+							}
+						});
+				builder.setCancelable(false);
+				builder.show();
+
 			}
 		});
 
@@ -559,22 +724,31 @@ public class MainActivity extends SherlockActivity {
 			break;
 		case IMG_REQUEST_CODE:
 
-			Uri selectedImg = data.getData();
+			if (data != null) {
 
-			String[] filePathColumn = new String[] { MediaStore.Images.Media.DATA };
+				Uri selectedImg = data.getData();
 
-			Cursor cursor = getContentResolver().query(selectedImg,
-					filePathColumn, null, null, null);
-			String filePath = "";
-			if (cursor.moveToFirst()) {
-				filePath = cursor.getString(cursor
-						.getColumnIndex(filePathColumn[0]));
-				cursor.close();
+				String[] filePathColumn = new String[] { MediaStore.Images.Media.DATA };
+
+				Cursor cursor = getContentResolver().query(selectedImg,
+						filePathColumn, null, null, null);
+				String filePath = "";
+				if (cursor.moveToFirst()) {
+					filePath = cursor.getString(cursor
+							.getColumnIndex(filePathColumn[0]));
+					cursor.close();
+				}
+
+				// Bitmap yourSelectedImg = BitmapFactory.decodeFile(filePath);
+				Log.i("TAG", "filePath: " + filePath);
+				// mMenuDrawer.setBackgroundDrawable(Drawable.createFromPath(filePath));
+
+				WriteToSD.writeFileToSD(filePath, imgStoreFolderName, handler);
+
+			} else {
+
+				Log.i("TAG", "onActivityResult data is null ");
 			}
-
-			// Bitmap yourSelectedImg = BitmapFactory.decodeFile(filePath);
-			Log.i("TAG", "filePath: " + filePath);
-			// mMenuDrawer.setBackgroundDrawable(Drawable.createFromPath(filePath));
 
 			break;
 		default:

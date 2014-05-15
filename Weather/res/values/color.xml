@@ -35,7 +35,6 @@
    <color name="buttom_top">#1e1e1e</color> 
    <color name="buttom_centre">#303030</color> 
    <color name="buttom_buttom">#000000</color>
-   
-   
+   <color name="my__holo_blue_light">#ff35b5e5</color>
    
 </resources>

@@ -10,6 +10,8 @@ import java.util.Random;
 
 import android.content.Context;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ public class WriteToSD {
 	String filePath = android.os.Environment.getExternalStorageDirectory()
 			+ "/weather";
 
+	private static final int IMG_MESSAGE_WHAT = 101;
+	
 	public WriteToSD(Context context) {
 		this.context = context;
 		if (!isExist()) {
@@ -30,48 +34,62 @@ public class WriteToSD {
 		}
 	}
 
-	public static void writeFileToSD(String completedFilePath, String storeFolderName) {
-		
-		String storeFolderPath = Environment.getExternalStorageDirectory()+"/"+storeFolderName;
-		
-		if(!isExist(storeFolderPath)){
+	public static void writeFileToSD(String completedFilePath,
+			String storeFolderName,final Handler handler) {
+
+		final String storeFolderPath = Environment
+				.getExternalStorageDirectory() + "/" + storeFolderName;
+
+		if (!isExist(storeFolderPath)) {
 			File file = new File(storeFolderPath);
 			file.mkdirs();
 		}
-		
-		String imgFileName = completedFilePath.substring(completedFilePath.lastIndexOf("/")+1);
-		
-		String storeFilePath = storeFolderPath+"/"+imgFileName;
-		
-		
-		if(isExist(storeFilePath)){
-			Log.i("TAG", "There is one image with the same name");
-			storeFilePath = storeFolderPath+"/"+new Random().nextInt(99999)+imgFileName;
-		}
-		
-		File imgFile = new File(completedFilePath);
-		
-		try {
-			FileOutputStream fos = new FileOutputStream(storeFilePath);
-			
-			InputStream is = new FileInputStream(imgFile);
-			
-			byte[] bytes = new byte[1024];
-			
-			int len = 0 ;
-			
-			while((len= is.read(bytes)) != -1){
+
+		final String imgFileName = completedFilePath
+				.substring(completedFilePath.lastIndexOf("/") + 1);
+
+		final File imgFile = new File(completedFilePath);
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				String storeFilePath = storeFolderPath + "/" + imgFileName;
+
+				if (isExist(storeFilePath)) {
+					Log.i("TAG", "There is one image with the same name");
+					storeFilePath = storeFolderPath + "/"
+							+ new Random().nextInt(99999) + imgFileName;
+				}
+
+				try {
+					FileOutputStream fos = new FileOutputStream(storeFilePath);
+
+					InputStream is = new FileInputStream(imgFile);
+
+					byte[] bytes = new byte[1024];
+
+					int len = 0;
+
+					while ((len = is.read(bytes)) != -1) {
+
+						fos.write(bytes, 0, len);
+					}
+
+					fos.flush();
+					fos.close();
+					is.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
-				fos.write(bytes, 0, len);
+				Message message = Message.obtain();
+				message.what = IMG_MESSAGE_WHAT;
+				message.obj = storeFilePath;
+				handler.sendMessage(message);
 			}
-			
-			fos.flush();
-			fos.close();
-			is.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}).start();
 
 	}
 
@@ -104,7 +122,6 @@ public class WriteToSD {
 			inputStream.close();
 			System.out.println("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
