@@ -8,6 +8,7 @@ import java.util.Map;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DB {
 	private static final String filename = android.os.Environment.getExternalStorageDirectory()+"/weather/database.db";
@@ -26,6 +27,44 @@ public class DB {
         cursor.close();
         database.close();
         return list;
+	}
+	
+	//get city pingying
+	public static String getCityPY(String id){
+		String cityPY = "";
+		
+		SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(filename, null);
+		
+		String SQL = "select city  from addressIdTbl where addressID = ?";
+		
+		Cursor cursor = database.rawQuery(SQL, new String[]{id});
+		
+        if(cursor.moveToFirst()){
+        	
+        	
+        	String city = cursor.getString(0);
+        	Log.i("CITY", "city:::: "+city);
+        	String queryPYSQL = "select AllNamePin from NT_areapin where Name = ?";
+        	
+        	cursor = database.rawQuery(queryPYSQL, new String[]{city});
+        	
+        	if(cursor.moveToFirst()){
+        		
+        		cityPY = cursor.getString(0);
+        		
+        		Log.i("CITY", "cityPY:::: "+cityPY);
+        		
+        	}else{
+        		cityPY ="guangzhou";
+        	}
+        	
+        }else{
+        	cityPY ="guangzhou";
+        }
+		
+		
+		return cityPY;
+		
 	}
 	//查询市
 	public static List<Map<String, String>> getCity(String province){

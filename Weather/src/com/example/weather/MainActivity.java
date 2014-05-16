@@ -129,6 +129,8 @@ public class MainActivity extends SherlockActivity {
 	NetworkChangeReceiver networkChangeReceiver;
 
 	private String imgStoreFolderName = "weather/bgImage";
+	
+	private TextView pm25Textview;
 
 	public static Handler handler = new Handler() {
 
@@ -341,6 +343,23 @@ public class MainActivity extends SherlockActivity {
 				.findViewById(R.id.tomorrowtemperature);
 		tomorrowWeather = (TextView) layout1.findViewById(R.id.tomorroweather);
 		weatherPic = (ImageView) layout1.findViewById(R.id.weatherPic);
+		
+		pm25Textview = (TextView) layout1.findViewById(R.id.pm25_textview);
+		
+		
+		pm25Textview.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				
+				String cityPY = DB.getCityPY(id).toLowerCase();
+				
+				Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://aqicn.org/city/"+cityPY));
+				startActivity(intent);
+				
+			}
+		});
 
 		DisplayMetrics displayMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -581,7 +600,7 @@ public class MainActivity extends SherlockActivity {
 		String[] from = new String[] { "address" };
 		int[] to = new int[] { android.R.id.text1 };
 		adapter = new SimpleAdapter(this, addressList,
-				android.R.layout.simple_list_item_single_choice, from, to);
+				R.layout.menu_list_item_layout, from, to);
 		menuListView.setAdapter(adapter);
 
 		Button add = (Button) mMenuDrawer.findViewById(R.id.addaddress);

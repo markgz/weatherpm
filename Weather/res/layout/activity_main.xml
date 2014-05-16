@@ -167,6 +167,7 @@
             android:layout_height="match_parent"
             android:text="PM2.5"
             android:textSize="50sp"
+            android:textColor="@color/my__holo_blue_light"
             android:gravity="center_vertical|center_horizontal"
             />
         
